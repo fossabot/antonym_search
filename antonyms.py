@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
+
+__author__ = 'Andrew Starodubtsev'
+__email__ = 'soho@illucent.info'
+__revision__ = '$Revision: 0.000000001 $'
+__doc__ = 'antonyms search'
+__usage__ = 'this module should be run via the command line'
 
 import sys, argparse, re
 import urllib2
