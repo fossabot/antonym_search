@@ -16,9 +16,8 @@ https://ru.wiktionary.org/wiki/%D0%B0%D0%BD%D1%82%D0%BE%D0%BD%D0%B8%D0%BC
 
 import sys
 import argparse
-import re
+import urllib.parse
 import urllib2
-import urllib
 import base64
 import cookielib
 import string
@@ -54,7 +53,7 @@ def getAntonymRu(word, *lang):
 
 	user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
 
-	hdr = {
+	headers = {
 	'User-Agent' : user_agent,
 	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 	'Accept-Charset': 'windows-1251,utf-8;q=0.7,*;q=0.3',
@@ -65,15 +64,15 @@ def getAntonymRu(word, *lang):
 	}
 
 	# Input parameters we are going to send
-	payload = {}
-	payload['lv'] = str('x').encode('utf-8')
-	payload['word'] = word.lower().encode('utf-8')
+	params = {}
+	params['lv'] = str('x').encode('utf-8')
+	params['word'] = word.lower().encode('utf-8')
 
 	# Use urllib to encode the payload
-	payload = urllib.urlencode(payload)
+	encoded = urllib.parse.urlencode(params)
 
 	url = 'http://www.gramota.ru/slovari/dic/?'
-	req = urllib2.Request(url+payload, data=payload, headers=hdr)
+	req = urllib2.Request(url+encoded, data=encoded, headers=headers)
 
 	# Make the request and read the response
 	resp = urllib2.urlopen(req).read()
@@ -89,7 +88,7 @@ def main():
     args = build_argparser().parse_args()
     getAntonymRu(args.word, args.lang)
     sys.exit(-1)
-	
-	
+
+
 if __name__ == '__main__':
     main()
