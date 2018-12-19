@@ -2,12 +2,21 @@
 # -*- coding: utf-8 -*-
 
 __author__ = 'Andrew Starodubtsev'
-__email__ = 'soho@illucent.info'
+__email__ = 'devtech@illucent.info'
 __revision__ = '$Revision: 0.000000001 $'
 __doc__ = 'antonyms search'
 __usage__ = 'this module should be run via the command line'
 
-import sys, argparse, re
+
+"""
+plans to replace endpoint to wiktionary.org
+https://ru.wiktionary.org/wiki/%D0%B0%D0%BD%D1%82%D0%BE%D0%BD%D0%B8%D0%BC
+"""
+
+
+import sys
+import argparse
+import re
 import urllib2
 import urllib
 import base64
@@ -24,12 +33,14 @@ from bs4 import BeautifulSoup
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+
 def build_argparser():
 		parser = argparse.ArgumentParser()
 		parser.add_argument('-w', dest='word', help="word search antonym for" )
 		parser.add_argument('-l', dest='lang', help="lanuage search antonym for", default='ru' )
 		return parser
 
+	
 def print_to_console(text):
     enc = locale.getdefaultlocale()[1] or "utf-8"
     try:
@@ -38,6 +49,7 @@ def print_to_console(text):
         # Unknown encoding or encoding problem. Fallback to ascii
         print(text.encode("ascii", errors="backslashreplace"))
 
+	
 def getAntonymRu(word, *lang):
 
 	user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
@@ -73,6 +85,11 @@ def getAntonymRu(word, *lang):
 		# text.append(d[:])
 		print_to_console(d[:])
 
-
-args = build_argparser().parse_args()
-getAntonymRu(args.word, args.lang)
+def main():
+    args = build_argparser().parse_args()
+    getAntonymRu(args.word, args.lang)
+    sys.exit(-1)
+	
+	
+if __name__ == '__main__':
+    main()
